@@ -122,3 +122,13 @@ app.post("/todos", limiter, async(req, res) => {
         return res.status(500).json({error: error.message})
     }
 })
+
+app.patch("/todos/:id", limiter, async(req, res) => {
+
+    const { title, description } = req.body
+
+    const id =  Number(req.params.id)
+
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid format!"})
+    }
