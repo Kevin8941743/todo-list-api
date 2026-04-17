@@ -184,3 +184,15 @@ app.get("/todos", async(req, res) => {
         console.log("Getting cache...")
         return res.json(JSON.parse(redis_cache))
     }
+
+    if (isNaN(page) || isNaN(limit)) {
+        return res.status(400).json({ error: "Incorrect format"})
+    }
+
+    const offset = (page - 1) * limit
+
+    const result = await pool.query(
+        `SELECT * FROM todo
+        OFFSET $1 LIMIT $2`,
+        [offset, limit]
+    )
