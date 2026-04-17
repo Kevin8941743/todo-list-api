@@ -88,3 +88,14 @@ app.post("/login", limiter, async (req, res) => {
     if (result.rows.length === 0 ) {
         return res.status(400).json({ error: "Resource not found!"})
     }
+
+    const user_data = result.rows[0]
+
+    const comparing = await bcrypt.compare(password, user_data.password)
+
+    if (!comparing) {
+        return res.status(400).json({ error: "Incorrect details!"})
+    }
+
+    return res.status(200).json({ Success: "Login successful!"})
+})
