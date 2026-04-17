@@ -180,10 +180,10 @@ app.get("/todos", async(req, res) => {
 
     const redis_cache = await client.get(`get:tasks:page${page}:limit:${limit}`)
 
-    if (redis_cache) {
+      if (redis_cache) {
         console.log("Getting cache...")
         return res.json(JSON.parse(redis_cache))
-    }
+    } 
 
     if (isNaN(page) || isNaN(limit)) {
         return res.status(400).json({ error: "Incorrect format"})
