@@ -53,3 +53,21 @@ app.post("/register", limiter, async (req, res) => {
     if (result.rows.length !== 0) {
         return res.status(400).json({ error: "Email already exists!"})
     }
+
+    const hashed = await bcrypt.hash(password, 10)
+    try {
+    const inserting_data = await pool.query(
+        `INSERT INTO auth (name, email, password)
+        VALUES ($1, $2, $3)
+        RETURNING id, name, email`,
+        [name, email, hashed]
+    )
+
+    return res.status(201).json(inserting_data.rows[0])
+
+} catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: error.message })
+
+}
+})
