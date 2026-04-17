@@ -1,0 +1,3 @@
+- name: Configure EC2
+  hosts: ec2
+  become: yes
