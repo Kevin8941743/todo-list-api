@@ -18,3 +18,14 @@ resource "aws_instance" "todo-blog" {
 resource "aws_security_group" "allow_tls" {
     name = "roadmap-security"
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+
+    security_group_id = aws_security_group.allow_tls.id
+
+    from_port = 22
+    to_port = 22
+    ip_protocol = "tcp"
+    cidr_ipv4 = "2.223.154.10/32"
+
+}
