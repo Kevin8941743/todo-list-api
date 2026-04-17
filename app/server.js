@@ -196,3 +196,12 @@ app.get("/todos", async(req, res) => {
         OFFSET $1 LIMIT $2`,
         [offset, limit]
     )
+
+    await client.setEx(`get:tasks:page${page}:limit:${limit}`, 1800, JSON.stringify(result.rows))
+
+    return res.json(result.rows)
+})
+
+app.listen(PORT, () => {
+    console.log(`The server is now listening on port: ${PORT}`)
+})
