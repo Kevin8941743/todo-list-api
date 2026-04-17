@@ -16,3 +16,13 @@
       apt:
         name: git 
         state: present
+    
+    - name: clone my github repo
+      git:
+        repo: "https://github.com/Kevin8941743/todo-list-api"
+        dest: /home/ubuntu/roadmap-api
+    
+    - name: Install dependencies
+      command: npm install
+      args:
+        chdir: /home/ubuntu/roadmap-api
