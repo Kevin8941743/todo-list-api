@@ -132,3 +132,18 @@ app.patch("/todos/:id", limiter, async(req, res) => {
     if (isNaN(id)) {
         return res.status(400).json({ error: "Invalid format!"})
     }
+
+    const result = await pool.query(
+        `UPDATE todo
+        SET title=$1, description=$2 
+        WHERE id=$3
+        RETURNING *`,
+        [title, description, id]
+    )
+
+    if (result.rowCount === 0) {
+        return res.status(400).json({ error: "Could not update!"})
+    }
+
+    return res.status(200).json({ Success: "Data has been updated successfully!"})
+})
