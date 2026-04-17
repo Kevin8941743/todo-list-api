@@ -202,6 +202,12 @@ app.get("/todos", async(req, res) => {
     return res.json(result.rows)
 })
 
+app.get("/health", (req, res) => {
+
+    res.json({ ok: true })
+  
+  })
+
 app.listen(PORT, () => {
     console.log(`The server is now listening on port: ${PORT}`)
 })
