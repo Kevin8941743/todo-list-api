@@ -107,3 +107,18 @@ app.post("/todos", limiter, async(req, res) => {
         if (!title || !description) {
             return res.status(400).json({error: "Title or description field is empty!"})
         }
+
+        const result = await pool.query(
+            `INSERT INTO todo (title, description)
+            VALUES ($1, $2)
+            RETURNING *`,
+            [title, description]
+        )
+
+        return res.json(result.rows[0])
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({error: error.message})
+    }
+})
