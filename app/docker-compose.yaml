@@ -1,0 +1,16 @@
+services:
+  backend:
+    container_name: backend_code
+    build: .
+    ports: 
+      - 3001:3001
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      REDIS_URL: ${REDIS_URL}
+
+    depends_on: 
+      - redis
+  
