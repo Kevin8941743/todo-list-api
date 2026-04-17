@@ -71,3 +71,11 @@ app.post("/register", limiter, async (req, res) => {
 
 }
 })
+
+app.post("/login", limiter, async (req, res) => {
+
+    const { name, email, password } = req.body
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ error: "Some data missing"})
+    }
