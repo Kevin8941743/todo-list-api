@@ -99,3 +99,11 @@ app.post("/login", limiter, async (req, res) => {
 
     return res.status(200).json({ Success: "Login successful!"})
 })
+
+app.post("/todos", limiter, async(req, res) => {
+    try {
+        const { title, description } = req.body
+
+        if (!title || !description) {
+            return res.status(400).json({error: "Title or description field is empty!"})
+        }
