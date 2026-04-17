@@ -36,3 +36,11 @@ const limiter = rateLimit({
     windowMs: 20 * 60 * 1000,
     message: "Please wait 20 minutes!"
 })
+
+app.post("/register", limiter, async (req, res) => {
+
+    const { name, email, password } = req.body 
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ error: "Some data missing"})
+    }
