@@ -24,3 +24,15 @@ const pool = new Pool({
         rejectUnauthorized: false,
     },
 })
+
+try {
+    await client.connect()
+} catch (error) {
+    console.error(error)
+}
+
+const limiter = rateLimit({
+    max: 15,
+    windowMs: 20 * 60 * 1000,
+    message: "Please wait 20 minutes!"
+})
