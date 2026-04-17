@@ -172,3 +172,15 @@ app.delete("/todos/:id", limiter, async(req, res) => {
         return res.status(500).json({error: error.message})
     }
 })
+
+app.get("/todos", async(req, res) => {
+
+    const page = Number(req.query.page)
+    const limit = Number(req.query.limit)
+
+    const redis_cache = await client.get(`get:tasks:page${page}:limit:${limit}`)
+
+    if (redis_cache) {
+        console.log("Getting cache...")
+        return res.json(JSON.parse(redis_cache))
+    }
