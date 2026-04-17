@@ -155,3 +155,20 @@ app.delete("/todos/:id", limiter, async(req, res) => {
     if (isNaN(id)) {
         return res.status(400).json({error: `Invalid input`})
     }
+
+    const result = await pool.query(
+        `DELETE FROM todo WHERE id=$1 RETURNING *`,
+        [id]
+    )
+
+    if (result.rowCount === 0) {
+        return res.status(404).json({ error: "Resource missing!" })
+    }
+
+    return res.status(200).json({ deleted: result.rows[0] })
+
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({error: error.message})
+    }
+})
