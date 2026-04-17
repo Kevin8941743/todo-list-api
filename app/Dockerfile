@@ -1,19 +1,12 @@
-FROM node:18 AS building
+FROM node:18
 
-WORKDIR /todo_blog 
+WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install 
-
-
-
-FROM node:alpine 
-
-WORKDIR /todo_blog
-
-COPY --from=building /todo_blog /todo_blog/
+RUN npm install
 
 COPY . .
+
+EXPOSE 3001
 
 CMD ["node", "server.js"]
