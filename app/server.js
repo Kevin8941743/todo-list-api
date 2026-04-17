@@ -44,3 +44,12 @@ app.post("/register", limiter, async (req, res) => {
     if (!name || !email || !password) {
         return res.status(400).json({ error: "Some data missing"})
     }
+
+    const result = await pool.query(
+        `SELECT email FROM auth WHERE email=$1`,
+        [email]
+    )
+
+    if (result.rows.length !== 0) {
+        return res.status(400).json({ error: "Email already exists!"})
+    }
