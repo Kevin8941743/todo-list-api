@@ -147,3 +147,11 @@ app.patch("/todos/:id", limiter, async(req, res) => {
 
     return res.status(200).json({ Success: "Data has been updated successfully!"})
 })
+
+app.delete("/todos/:id", limiter, async(req, res) => {
+    try { 
+    const id = Number(req.params.id)
+
+    if (isNaN(id)) {
+        return res.status(400).json({error: `Invalid input`})
+    }
