@@ -12,6 +12,11 @@
         name: docker.io
         state: present
     
+    - name: Install docker compose
+      apt: 
+        name: docker-compose
+        state: present
+    
     - name: Start the docker servie 
       service:
         name: docker
@@ -26,11 +31,20 @@
     - name: clone my github repo
       git:
         repo: "https://github.com/Kevin8941743/todo-list-api.git"
-        dest: /home/ubuntu/roadmap-api
-
-    - name: Build Docker image
-      command: docker build -t roadmap-todo-api /home/ubuntu/roadmap-api/app
-  
+        dest: /home/ubuntu/todo-api
+        update: yes
     
-    - name: Run Docker container 
-      command: docker container run -d -p 3001:3001 --name api-ansible roadmap-todo-api
+    - name: Copy env file
+      copy:
+        src: /Users/Kevinthapa/todo-api/app/.env
+        dest: /home/ubuntu/todo-api/app/.env
+    
+    - name: Stop any docker-compose containers 
+      command: docker-compose down
+      args:
+        chdir: /home/ubuntu/todo-api/app
+
+    - name: Start docker compose 
+      command: docker-compose up -d --build
+      args:
+        chdir: /home/ubuntu/todo-api/app
