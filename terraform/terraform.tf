@@ -7,7 +7,7 @@ resource "aws_instance" "todo-blog" {
         Name = "roadmap-api"
     }
 
-    key_name="roadmap-api-crud"
+    key_name="testing-final"
 
     vpc_security_group_ids = [aws_security_group.allow_tls.id]
 
@@ -19,7 +19,7 @@ resource "aws_security_group" "allow_tls" {
     name = "roadmap-security"
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ingress_ipv4" {
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
 
     security_group_id = aws_security_group.allow_tls.id
 
@@ -28,14 +28,26 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ingress_ipv4" {
     ip_protocol = "tcp"
     cidr_ipv4 = "2.223.154.10/32"
 
+
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tls_ingress_ipv4" {
+
+    security_group_id = aws_security_group.allow_tls.id
+
+    from_port = 3001
+    to_port = 3001
+    ip_protocol = "tcp"
+    cidr_ipv4 = "0.0.0.0/0"
+
+
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_tls_egress_ipv4" {
 
     security_group_id = aws_security_group.allow_tls.id
 
-    from_port = 0
-    to_port = 0
+
     ip_protocol = "-1"
     cidr_ipv4 = "0.0.0.0/0"
 
