@@ -130,8 +130,7 @@ Deployment -> Ansible -> Docker Compose
 
 This project is open source and available under the MIT License.
 
-roadmap.sh Node.js Blogging Platform API project URL: https://roadmap.sh/projects/blogging-platform-api
-
+roadmap.sh Node.js Todo List API project URL: https://roadmap.sh/projects/todo-list-api
 
 
 
