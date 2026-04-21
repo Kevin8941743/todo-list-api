@@ -16,9 +16,16 @@ spec:
       - name: backend
         image: kevin9463/todo-api-backend:v1.0.0
         resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
           limits:
             memory: "128Mi"
             cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true 
         ports:
         - containerPort: 3001
         env:
