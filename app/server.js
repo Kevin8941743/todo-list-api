@@ -14,6 +14,7 @@ const client = createClient({
     url: process.env.REDIS_URL
 })
 
+
 const pool = new Pool({
     user: process.env.DATABASE_USER,
     host: process.env.DATABASE_HOST,
