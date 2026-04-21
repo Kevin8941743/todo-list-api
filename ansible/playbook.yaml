@@ -1,50 +1,56 @@
 - name: Configure EC2
   hosts: ec2
-  become: yes
+  become: true
 
   tasks:
     - name: update apt packages
-      apt:
-        update_cache: yes
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install Python 3
+      ansible.builtin.apt:
+        name: python3
+        state: present
+    
+    - name: Install python pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
     
     - name: Install Docker
-      apt:
+      ansible.builtin.apt:
         name: docker.io
         state: present
     
+    - name: Install docker python SDK
+      ansible.builtin.pip:
+        name: docker
+        executable: pip3
+    
     - name: Install docker compose
-      apt: 
-        name: docker-compose
+      ansible.builtin.apt: 
+        name: docker-compose-plugin
         state: present
     
     - name: Start the docker servie 
-      service:
+      ansible.builtin.service:
         name: docker
         state: started
-        enabled: yes
+        enabled: true
     
     - name: install git 
-      apt:
+      ansible.builtin.apt:
         name: git 
         state: present
     
     - name: clone my github repo
-      git:
+      ansible.builtin.git:
         repo: "https://github.com/Kevin8941743/todo-list-api.git"
         dest: /home/ubuntu/todo-api
-        update: yes
-    
-    - name: Copy env file
-      copy:
-        src: /Users/Kevinthapa/todo-api/app/.env
-        dest: /home/ubuntu/todo-api/app/.env
-    
-    - name: Stop any docker-compose containers 
-      command: docker-compose down
-      args:
-        chdir: /home/ubuntu/todo-api/app
-
+        update: true
+  
     - name: Start docker compose 
-      command: docker-compose up -d --build
-      args:
-        chdir: /home/ubuntu/todo-api/app
+      community.docker.docker_compose_v2:
+        project_src: /home/ubuntu/todo-api/app
+        state: present
+        build: true 
