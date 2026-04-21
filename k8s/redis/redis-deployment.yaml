@@ -11,6 +11,17 @@ spec:
     metadata:
       labels:
         app: redis
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "128Mi"
+
+  securityContext:
+    runAsNonRootUser: true
+    runAsUser: 1000
     spec:
       containers:
       - name: redis
