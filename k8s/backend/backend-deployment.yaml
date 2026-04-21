@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: kevin9463/todo-api-backend:latest
+        image: kevin9463/todo-api-backend:v1.0.0
         resources:
           limits:
             memory: "128Mi"
