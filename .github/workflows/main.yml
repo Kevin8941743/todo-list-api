@@ -39,12 +39,12 @@ jobs:
         run: npm run lint
 
       - name: Lint kubernetes
-        uses: stackrox/kube-linter-action@v0.8
+        uses: stackrox/kube-linter-action@v1
         with:
           directory: ./k8s
        
       - name: Lint Dockerfile
-        uses: hadolint/hadolint-action@v2
+        uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: app/Dockerfile 
         
