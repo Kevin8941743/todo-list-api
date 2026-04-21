@@ -3,7 +3,7 @@
   become: true
 
   tasks:
-    - name: update apt packages
+    - name: Update apt packages
       ansible.builtin.apt:
         update_cache: true
 
@@ -38,19 +38,20 @@
         state: started
         enabled: true
 
-    - name: install git
+    - name: Install git
       ansible.builtin.apt:
         name: git
         state: present
 
-    - name: clone my github repo
+    - name: Clone my github repo
       ansible.builtin.git:
         repo: "https://github.com/Kevin8941743/todo-list-api.git"
         dest: /home/ubuntu/todo-api
         update: true
+        version: main
 
     - name: Start docker compose
       community.docker.docker_compose_v2:
         project_src: /home/ubuntu/todo-api/app
         state: present
-        build: true
+        build: always
